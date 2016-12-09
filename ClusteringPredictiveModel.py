@@ -6,11 +6,12 @@ import pandas as pd
 
 class ClusteringPredictiveModel:
     
-    def __init__(self, case_id_col, event_col, label_col, timestamp_col, cat_cols, numeric_cols, n_clusters, n_estimators, random_state=22, fillna=True):
+    def __init__(self, case_id_col, event_col, label_col, timestamp_col, cat_cols, numeric_cols, n_clusters, n_estimators, random_state=22, fillna=True, pos_label="positive"):
         
         # columns
         self.case_id_col = case_id_col
         self.label_col = label_col
+        self.pos_label = pos_label
         
         self.n_clusters = n_clusters
         
@@ -72,6 +73,7 @@ class ClusteringPredictiveModel:
         
         preds.fillna(0, inplace=True)
         self.actual.fillna(0, inplace=True)
+        self.actual = self.actual[self.pos_label]
         
-        return preds
+        return preds[self.pos_label]
         
